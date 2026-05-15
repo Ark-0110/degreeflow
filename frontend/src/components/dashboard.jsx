@@ -11,7 +11,7 @@ function Dashboard() {
     { title: "Current GPA", value: gpa.toFixed(2) }
   ];
 
-  const courses = [
+  const [courses, setCourses] = useState([
     {
       code: "IDS 201",
       name: "Introduction to Data Science",
@@ -30,7 +30,7 @@ function Dashboard() {
       credits: 3,
       status: "In Progress"
     }
-  ];
+  ]);
 
   function increaseGpa() {
     setGpa(gpa + 0.1);
