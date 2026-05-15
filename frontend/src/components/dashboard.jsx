@@ -1,6 +1,7 @@
 import { useState } from "react";
 import StatsCard from "./statscard";
 import CourseCard from "./CourseCard";
+import { courseCatalog } from "../data/courses";
 
 function Dashboard() {
   const [gpa, setGpa] = useState(3.8);
@@ -31,10 +32,26 @@ function Dashboard() {
       status: "In Progress"
     }
   ]);
+  
+  const [selectedCourseCode, setSelectedCourseCode] = useState("");
+
 
   function increaseGpa() {
     setGpa(gpa + 0.1);
   }
+
+  function addCourse() {
+  const selectedCourse = courseCatalog.find(
+    (course) => course.code === selectedCourseCode
+  );
+
+  if (!selectedCourse) {
+    return;
+  }
+
+  setCourses([...courses, selectedCourse]);
+  setSelectedCourseCode("");
+}
 
   return (
     <main>
@@ -64,6 +81,23 @@ function Dashboard() {
           />
         ))}
       </div>
+
+      <select
+        value={selectedCourseCode}
+        onChange={(event) => setSelectedCourseCode(event.target.value)}
+      >
+      <option value="">Select a course</option>
+
+        {courseCatalog.map((course) => (
+      <option key={course.code} value={course.code}>
+        {course.code} - {course.name}
+      </option>
+  ))}
+      </select>
+
+      <button onClick={addCourse}>
+        Add Course
+      </button>
 
     </main>
   );
